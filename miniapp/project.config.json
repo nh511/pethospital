@@ -1,0 +1,16 @@
+{
+  "description": "宠物医院小程序",
+  "miniprogramRoot": "./",
+  "compileType": "miniprogram",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "compileHotReLoad": true,
+    "useCompilerPlugins": [
+      "typescript"
+    ]
+  },
+  "appid": "touristappid",
+  "projectname": "pet-hospital"
+}

@@ -1,0 +1,598 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pet Hospital Internal Embedding",
+    "version": "1.0"
+  },
+  "paths": {
+    "/internal/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_internal_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/internal/tokenize": {
+      "post": {
+        "summary": "Tokenize",
+        "operationId": "tokenize_internal_tokenize_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenizeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/internal/embeddings": {
+      "post": {
+        "summary": "Embeddings",
+        "operationId": "embeddings_internal_embeddings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmbeddingResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/internal/chunks": {
+      "post": {
+        "summary": "Chunks",
+        "operationId": "chunks_internal_chunks_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChunkRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChunkResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BatchRequest": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "query",
+              "passages"
+            ],
+            "title": "Mode"
+          },
+          "inputs": {
+            "items": {
+              "type": "string",
+              "maxLength": 100000,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Inputs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mode",
+          "inputs"
+        ],
+        "title": "BatchRequest"
+      },
+      "Chunk": {
+        "properties": {
+          "ordinal": {
+            "type": "integer",
+            "title": "Ordinal"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "contentHash": {
+            "type": "string",
+            "title": "Contenthash"
+          },
+          "startOffset": {
+            "type": "integer",
+            "title": "Startoffset"
+          },
+          "endOffset": {
+            "type": "integer",
+            "title": "Endoffset"
+          },
+          "startToken": {
+            "type": "integer",
+            "title": "Starttoken"
+          },
+          "endToken": {
+            "type": "integer",
+            "title": "Endtoken"
+          },
+          "bodyTokens": {
+            "type": "integer",
+            "title": "Bodytokens"
+          },
+          "tokenCount": {
+            "type": "integer",
+            "title": "Tokencount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ordinal",
+          "content",
+          "contentHash",
+          "startOffset",
+          "endOffset",
+          "startToken",
+          "endToken",
+          "bodyTokens",
+          "tokenCount"
+        ],
+        "title": "Chunk"
+      },
+      "ChunkRequest": {
+        "properties": {
+          "content": {
+            "type": "string",
+            "maxLength": 100000,
+            "minLength": 1,
+            "title": "Content"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "content"
+        ],
+        "title": "ChunkRequest"
+      },
+      "ChunkResponse": {
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/EmbeddingProfile"
+          },
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/Chunk"
+            },
+            "type": "array",
+            "title": "Chunks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "profile",
+          "chunks"
+        ],
+        "title": "ChunkResponse"
+      },
+      "EmbeddingProfile": {
+        "properties": {
+          "fingerprint": {
+            "type": "string",
+            "title": "Fingerprint"
+          },
+          "modelId": {
+            "type": "string",
+            "title": "Modelid"
+          },
+          "revision": {
+            "type": "string",
+            "title": "Revision"
+          },
+          "dimension": {
+            "type": "integer",
+            "title": "Dimension"
+          },
+          "queryPrefix": {
+            "type": "string",
+            "title": "Queryprefix"
+          },
+          "normalizeL2": {
+            "type": "boolean",
+            "title": "Normalizel2"
+          },
+          "splitterVersion": {
+            "type": "string",
+            "title": "Splitterversion"
+          },
+          "chunkTokens": {
+            "type": "integer",
+            "title": "Chunktokens"
+          },
+          "overlapTokens": {
+            "type": "integer",
+            "title": "Overlaptokens"
+          },
+          "maxBodyTokens": {
+            "type": "integer",
+            "title": "Maxbodytokens"
+          },
+          "maxTokens": {
+            "type": "integer",
+            "title": "Maxtokens"
+          },
+          "maxChunkBytes": {
+            "type": "integer",
+            "title": "Maxchunkbytes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fingerprint",
+          "modelId",
+          "revision",
+          "dimension",
+          "queryPrefix",
+          "normalizeL2",
+          "splitterVersion",
+          "chunkTokens",
+          "overlapTokens",
+          "maxBodyTokens",
+          "maxTokens",
+          "maxChunkBytes"
+        ],
+        "title": "EmbeddingProfile"
+      },
+      "EmbeddingResponse": {
+        "properties": {
+          "modelId": {
+            "type": "string",
+            "title": "Modelid"
+          },
+          "revision": {
+            "type": "string",
+            "title": "Revision"
+          },
+          "dimension": {
+            "type": "integer",
+            "title": "Dimension"
+          },
+          "maxTokens": {
+            "type": "integer",
+            "title": "Maxtokens"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "query",
+              "passages"
+            ],
+            "title": "Mode"
+          },
+          "vectors": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Vectors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "modelId",
+          "revision",
+          "dimension",
+          "maxTokens",
+          "mode",
+          "vectors"
+        ],
+        "title": "EmbeddingResponse"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorResponse"
+      },
+      "HealthResponse": {
+        "properties": {
+          "modelId": {
+            "type": "string",
+            "title": "Modelid"
+          },
+          "revision": {
+            "type": "string",
+            "title": "Revision"
+          },
+          "dimension": {
+            "type": "integer",
+            "title": "Dimension"
+          },
+          "maxTokens": {
+            "type": "integer",
+            "title": "Maxtokens"
+          },
+          "status": {
+            "type": "string",
+            "const": "ready",
+            "title": "Status"
+          },
+          "device": {
+            "type": "string",
+            "const": "cpu",
+            "title": "Device"
+          }
+        },
+        "type": "object",
+        "required": [
+          "modelId",
+          "revision",
+          "dimension",
+          "maxTokens",
+          "status",
+          "device"
+        ],
+        "title": "HealthResponse"
+      },
+      "TokenizeResponse": {
+        "properties": {
+          "modelId": {
+            "type": "string",
+            "title": "Modelid"
+          },
+          "revision": {
+            "type": "string",
+            "title": "Revision"
+          },
+          "dimension": {
+            "type": "integer",
+            "title": "Dimension"
+          },
+          "maxTokens": {
+            "type": "integer",
+            "title": "Maxtokens"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "query",
+              "passages"
+            ],
+            "title": "Mode"
+          },
+          "prefixLength": {
+            "type": "integer",
+            "title": "Prefixlength"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TokenizedInput"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "modelId",
+          "revision",
+          "dimension",
+          "maxTokens",
+          "mode",
+          "prefixLength",
+          "items"
+        ],
+        "title": "TokenizeResponse"
+      },
+      "TokenizedInput": {
+        "properties": {
+          "tokenIds": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Tokenids"
+          },
+          "offsets": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                }
+              ],
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2
+            },
+            "type": "array",
+            "title": "Offsets"
+          },
+          "tokenCount": {
+            "type": "integer",
+            "title": "Tokencount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tokenIds",
+          "offsets",
+          "tokenCount"
+        ],
+        "title": "TokenizedInput"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

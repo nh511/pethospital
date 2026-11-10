@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pet-hospital.local/schema/triage-rule-predicate.schema.json",
+  "title": "Pet hospital triage rule predicate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "applicableSpecies", "expression"],
+  "properties": {
+    "schemaVersion": { "const": "1" },
+    "applicableSpecies": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": { "enum": ["CAT", "DOG"] }
+    },
+    "expression": { "$ref": "#/$defs/node" }
+  },
+  "$defs": {
+    "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,63}$" },
+    "screeningKey": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]{0,63}$" },
+    "node": {
+      "oneOf": [
+        { "$ref": "#/$defs/group" },
+        { "$ref": "#/$defs/symptom" },
+        { "$ref": "#/$defs/screeningEq" },
+        { "$ref": "#/$defs/screeningIn" },
+        { "$ref": "#/$defs/duration" }
+      ]
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operator", "children"],
+      "properties": {
+        "operator": { "enum": ["ALL", "ANY"] },
+        "children": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/node" }
+        }
+      }
+    },
+    "symptom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact", "code", "operator"],
+      "properties": {
+        "fact": { "const": "SYMPTOM" },
+        "code": { "$ref": "#/$defs/code" },
+        "operator": { "const": "IS_PRESENT" }
+      }
+    },
+    "screeningEq": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact", "code", "operator", "value"],
+      "properties": {
+        "fact": { "const": "SCREENING" },
+        "code": { "$ref": "#/$defs/screeningKey" },
+        "operator": { "const": "EQ" },
+        "value": { "$ref": "#/$defs/code" }
+      }
+    },
+    "screeningIn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact", "code", "operator", "values"],
+      "properties": {
+        "fact": { "const": "SCREENING" },
+        "code": { "$ref": "#/$defs/screeningKey" },
+        "operator": { "const": "IN" },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/code" }
+        }
+      }
+    },
+    "duration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact", "code", "operator", "value"],
+      "properties": {
+        "fact": { "const": "DURATION_MINUTES" },
+        "code": { "$ref": "#/$defs/code" },
+        "operator": { "enum": ["GTE", "LTE"] },
+        "value": { "type": "integer", "minimum": 0, "maximum": 525600 }
+      }
+    }
+  }
+}

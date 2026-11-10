@@ -1,0 +1,49 @@
+{
+  "fixtureVersion": "1",
+  "clinicalUse": "DEMO_NOT_CLINICALLY_VALIDATED",
+  "doctorApprovalRequired": true,
+  "rules": [
+    {
+      "ruleCode": "DEMO_CAT_SEIZURE",
+      "revisionNo": 1,
+      "speciesCode": "CAT",
+      "riskLevel": "EMERGENCY",
+      "fixedAdvice": "保持周围环境安全，不要强行按压或向口中放入物品，并立即联系宠物医院。",
+      "sourceUrl": "https://example.org/demo-only/cat-seizure",
+      "predicate": {
+        "schemaVersion": "1",
+        "applicableSpecies": ["CAT"],
+        "expression": {"fact": "SYMPTOM", "code": "SEIZURE", "operator": "IS_PRESENT"}
+      },
+      "cases": [
+        {"caseId": "positive", "context": "POSITIVE", "speciesCode": "CAT", "userMessage": "猫咪现在正在抽搐", "screeningAnswers": {}, "expectedOutcome": "MATCHED", "expectedEvidenceState": "PRESENT", "expectedRiskLevel": "EMERGENCY", "expectedEmergency": true, "expectedRuleVersion": "DEMO_CAT_SEIZURE@1"},
+        {"caseId": "negated", "context": "NEGATED", "speciesCode": "CAT", "userMessage": "猫咪今天没有抽搐", "screeningAnswers": {}, "expectedOutcome": "NOT_MATCHED", "expectedEvidenceState": "ABSENT", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_CAT_SEIZURE@1"},
+        {"caseId": "hypothetical", "context": "HYPOTHETICAL", "speciesCode": "CAT", "userMessage": "如果猫咪抽搐应该怎么办", "screeningAnswers": {}, "expectedOutcome": "NOT_MATCHED", "expectedEvidenceState": "HYPOTHETICAL", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_CAT_SEIZURE@1"},
+        {"caseId": "historical-resolved", "context": "HISTORICAL_RESOLVED", "speciesCode": "CAT", "userMessage": "猫咪之前抽搐但现在已经好了", "screeningAnswers": {}, "expectedOutcome": "NOT_MATCHED", "expectedEvidenceState": "HISTORICAL_RESOLVED", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_CAT_SEIZURE@1"},
+        {"caseId": "unknown", "context": "UNKNOWN", "speciesCode": "CAT", "userMessage": "猫咪精神不太好，其他情况说不清", "screeningAnswers": {}, "expectedOutcome": "UNKNOWN", "expectedEvidenceState": "MISSING", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_CAT_SEIZURE@1"},
+        {"caseId": "species-mismatch", "context": "SPECIES_MISMATCH", "speciesCode": "DOG", "userMessage": "猫咪现在正在抽搐", "screeningAnswers": {}, "expectedOutcome": "NOT_APPLICABLE", "expectedEvidenceState": "NOT_EVALUATED_SPECIES", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_CAT_SEIZURE@1"}
+      ]
+    },
+    {
+      "ruleCode": "DEMO_DOG_BLEEDING",
+      "revisionNo": 1,
+      "speciesCode": "DOG",
+      "riskLevel": "EMERGENCY",
+      "fixedAdvice": "用干净材料持续轻压止血并立即联系宠物医院，不要反复掀开查看伤口。",
+      "sourceUrl": "https://example.org/demo-only/dog-bleeding",
+      "predicate": {
+        "schemaVersion": "1",
+        "applicableSpecies": ["DOG"],
+        "expression": {"fact": "SYMPTOM", "code": "UNCONTROLLED_BLEEDING", "operator": "IS_PRESENT"}
+      },
+      "cases": [
+        {"caseId": "positive", "context": "POSITIVE", "speciesCode": "DOG", "userMessage": "狗狗现在大量出血", "screeningAnswers": {}, "expectedOutcome": "MATCHED", "expectedEvidenceState": "PRESENT", "expectedRiskLevel": "EMERGENCY", "expectedEmergency": true, "expectedRuleVersion": "DEMO_DOG_BLEEDING@1"},
+        {"caseId": "negated", "context": "NEGATED", "speciesCode": "DOG", "userMessage": "狗狗没有大量出血", "screeningAnswers": {}, "expectedOutcome": "NOT_MATCHED", "expectedEvidenceState": "ABSENT", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_DOG_BLEEDING@1"},
+        {"caseId": "hypothetical", "context": "HYPOTHETICAL", "speciesCode": "DOG", "userMessage": "如果狗狗大量出血应该怎么办", "screeningAnswers": {}, "expectedOutcome": "NOT_MATCHED", "expectedEvidenceState": "HYPOTHETICAL", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_DOG_BLEEDING@1"},
+        {"caseId": "historical-resolved", "context": "HISTORICAL_RESOLVED", "speciesCode": "DOG", "userMessage": "狗狗之前大量出血但现在已经停止", "screeningAnswers": {}, "expectedOutcome": "NOT_MATCHED", "expectedEvidenceState": "HISTORICAL_RESOLVED", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_DOG_BLEEDING@1"},
+        {"caseId": "unknown", "context": "UNKNOWN", "speciesCode": "DOG", "userMessage": "狗狗精神不太好，其他情况说不清", "screeningAnswers": {}, "expectedOutcome": "UNKNOWN", "expectedEvidenceState": "MISSING", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_DOG_BLEEDING@1"},
+        {"caseId": "species-mismatch", "context": "SPECIES_MISMATCH", "speciesCode": "CAT", "userMessage": "狗狗现在大量出血", "screeningAnswers": {}, "expectedOutcome": "NOT_APPLICABLE", "expectedEvidenceState": "NOT_EVALUATED_SPECIES", "expectedRiskLevel": "UNKNOWN", "expectedEmergency": false, "expectedRuleVersion": "DEMO_DOG_BLEEDING@1"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "pet-hospital-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@10.20.0",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vue-tsc --noEmit && vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "contract:generate": "node ../tools/openapi-contract.mjs generate",
+    "contract:check": "node ../tools/openapi-contract.mjs check"
+  },
+  "dependencies": {
+    "vue": "3.5.22",
+    "element-plus": "2.11.5",
+    "vue-router": "4.6.3",
+    "pinia": "3.0.3",
+    "axios": "1.12.2",
+    "echarts": "6.0.0"
+  },
+  "devDependencies": {
+    "vite": "8.0.0",
+    "@vitejs/plugin-vue": "6.0.1",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.1.1",
+    "vitest": "4.0.3",
+    "@playwright/test": "1.56.1"
+  }
+}

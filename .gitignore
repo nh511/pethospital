@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+.tools/
+.local/
+.pnpm-store/
+**/target/
+**/node_modules/
+**/dist/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/test-results/
+**/playwright-report/
+**/project.private.config.json
+*.log
+

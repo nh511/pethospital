@@ -1,0 +1,1 @@
+<view class="card"><view class="title">{{title}}</view><view class="note">{{status}}</view><view class="note">宠物档案 · 就诊预约 · AI 问诊</view></view>

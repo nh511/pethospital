@@ -1,0 +1,17 @@
+{
+  "name": "pet-hospital-miniapp",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.20.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "contract:generate": "node ../tools/openapi-contract.mjs generate",
+    "contract:check": "node ../tools/openapi-contract.mjs check"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "miniprogram-api-typings": "4.0.8",
+    "vitest": "4.0.3"
+  }
+}

@@ -1,0 +1,8 @@
+# CPython 3.11, Linux x86_64, CPU inference and integration tests
+fastapi==0.162.0
+uvicorn==0.54.0
+sentence-transformers==6.2.0
+transformers==5.22.1
+torch @ https://download.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl#sha256=cee15855a32ad89a9bb27b8a9d6e07a859dcd2e11ed1b5561f3d6206e31a103b
+httpx==0.28.1
+pytest==8.4.2

@@ -1,0 +1,96 @@
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: ${SERVER_PORT:8080}
+spring:
+  application:
+    name: pet-hospital
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:13306/pethospital?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true&characterEncoding=UTF-8}
+    username: ${MYSQL_USER:petapp}
+    password: ${MYSQL_PASSWORD:}
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    clean-disabled: true
+    baseline-on-migrate: false
+    out-of-order: false
+  jackson:
+    time-zone: UTC
+    deserialization:
+      fail-on-unknown-properties: true
+  mvc:
+    problemdetails:
+      enabled: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: assign_id
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+springdoc:
+  api-docs:
+    version: OPENAPI_3_0
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:false}
+hospital:
+  name: ${HOSPITAL_NAME:宠物健康中心}
+  address: ${HOSPITAL_ADDRESS:请配置医院地址}
+  phone: ${HOSPITAL_PHONE:}
+  business-hours: ${HOSPITAL_BUSINESS_HOURS:09:00-18:00}
+identity:
+  wechat:
+    mode: ${WECHAT_MODE:disabled}
+    app-id: ${WECHAT_APP_ID:}
+    app-secret: ${WECHAT_APP_SECRET:}
+    endpoint: ${WECHAT_CODE_SESSION_ENDPOINT:https://api.weixin.qq.com/sns/jscode2session}
+    stub:
+      code: ${WECHAT_STUB_CODE:}
+      openid: ${WECHAT_STUB_OPENID:}
+    openid-hmac-key-base64: ${WECHAT_OPENID_HMAC_KEY_BASE64:}
+    openid-encryption-key-base64: ${WECHAT_OPENID_ENCRYPTION_KEY_BASE64:}
+  access:
+    completed-appointment-days: ${IDENTITY_COMPLETED_APPOINTMENT_ACCESS_DAYS:30}
+  policies:
+    privacy:
+      version: ${PRIVACY_POLICY_VERSION:2026-10}
+      text: "${PRIVACY_POLICY_TEXT:本系统处理账号、联系方式、宠物档案与问诊内容，用于提供宠物医院服务和保障账号安全。}"
+    ai-service:
+      version: ${AI_SERVICE_POLICY_VERSION:2026-10}
+      text: "${AI_SERVICE_POLICY_TEXT:AI问诊会将必要且尽量去标识化的宠物信息与问诊内容提供给配置的模型服务；结果仅供参考，不能替代执业兽医诊断。}"
+  profile:
+    phone-key-base64: ${PROFILE_PHONE_KEY_BASE64:}
+  jwt:
+    issuer: ${JWT_ISSUER:pet-hospital}
+    private-key-location: ${JWT_PRIVATE_KEY_LOCATION:}
+    public-key-location: ${JWT_PUBLIC_KEY_LOCATION:}
+    allow-ephemeral: ${JWT_ALLOW_EPHEMERAL:false}
+storage:
+  s3:
+    enabled: ${S3_ENABLED:false}
+    endpoint: ${S3_ENDPOINT:http://127.0.0.1:8333}
+    public-endpoint: ${S3_PUBLIC_ENDPOINT:http://127.0.0.1:8333}
+    region: ${S3_REGION:us-east-1}
+    bucket: ${S3_BUCKET:pet-private}
+    access-key: ${S3_ACCESS_KEY:}
+    secret-key: ${S3_SECRET_KEY:}
+ai:
+  deepseek:
+    endpoint: ${DEEPSEEK_ENDPOINT:https://api.deepseek.com}
+    api-key: ${DEEPSEEK_API_KEY:}
+    model: ${DEEPSEEK_MODEL:deepseek-flash}
+    connect-timeout-ms: ${DEEPSEEK_CONNECT_TIMEOUT_MS:3000}
+    read-timeout-ms: ${DEEPSEEK_READ_TIMEOUT_MS:60000}
+

@@ -1,0 +1,36 @@
+name: pet-hospital
+services:
+  mysql:
+    image: mysql:8.4.13
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-pethospital}
+      MYSQL_USER: ${MYSQL_USER:-petapp}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD}
+    ports: ["127.0.0.1:13306:3306"]
+    volumes: ["mysql-data:/var/lib/mysql"]
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_ROOT_PASSWORD mysqladmin ping -h 127.0.0.1 -u root --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+  qdrant:
+    image: qdrant/qdrant:v1.20.0
+    environment:
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY:?Set QDRANT_API_KEY}
+    ports: ["127.0.0.1:6333:6333"]
+    volumes: ["qdrant-data:/qdrant/storage"]
+  storage:
+    image: chrislusf/seaweedfs:4.51
+    command: ["mini", "-dir=/data"]
+    environment:
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?Set S3_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?Set S3_SECRET_KEY}
+      S3_BUCKET: pet-private
+    ports: ["127.0.0.1:8333:8333"]
+    volumes: ["storage-data:/data"]
+volumes:
+  mysql-data:
+  qdrant-data:
+  storage-data:
+
